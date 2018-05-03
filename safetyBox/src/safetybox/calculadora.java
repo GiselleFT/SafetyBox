@@ -4,9 +4,11 @@ public class calculadora extends javax.swing.JFrame {
 
     String operando1;
     String operando2;
+    static Double operando3 = 0.0;
     String operador;
     public calculadora() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -82,6 +84,11 @@ public class calculadora extends javax.swing.JFrame {
         jButtonMasMenos.setBackground(new java.awt.Color(255, 255, 255));
         jButtonMasMenos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonMasMenos.setText("±");
+        jButtonMasMenos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMasMenosActionPerformed(evt);
+            }
+        });
 
         jButtonNum8.setBackground(new java.awt.Color(255, 255, 255));
         jButtonNum8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -149,10 +156,20 @@ public class calculadora extends javax.swing.JFrame {
         jButtonPunto.setBackground(new java.awt.Color(255, 255, 255));
         jButtonPunto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonPunto.setText(".");
+        jButtonPunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPuntoActionPerformed(evt);
+            }
+        });
 
         jButtonDivision.setBackground(new java.awt.Color(255, 255, 255));
         jButtonDivision.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonDivision.setText("÷");
+        jButtonDivision.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDivisionActionPerformed(evt);
+            }
+        });
 
         jButtonMultiplicacion.setBackground(new java.awt.Color(255, 255, 255));
         jButtonMultiplicacion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -166,18 +183,38 @@ public class calculadora extends javax.swing.JFrame {
         jButtonResta.setBackground(new java.awt.Color(255, 255, 255));
         jButtonResta.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonResta.setText("-");
+        jButtonResta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRestaActionPerformed(evt);
+            }
+        });
 
         jButtonSuma.setBackground(new java.awt.Color(255, 255, 255));
         jButtonSuma.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonSuma.setText("+");
+        jButtonSuma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSumaActionPerformed(evt);
+            }
+        });
 
         jButtonRaiz.setBackground(new java.awt.Color(255, 255, 255));
         jButtonRaiz.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonRaiz.setText("x½");
+        jButtonRaiz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRaizActionPerformed(evt);
+            }
+        });
 
         jButtonPorcentaje.setBackground(new java.awt.Color(255, 255, 255));
         jButtonPorcentaje.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonPorcentaje.setText("%");
+        jButtonPorcentaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPorcentajeActionPerformed(evt);
+            }
+        });
 
         jButtonCuadrado.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCuadrado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -200,6 +237,11 @@ public class calculadora extends javax.swing.JFrame {
         jButtonC.setBackground(new java.awt.Color(255, 255, 255));
         jButtonC.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonC.setText("C");
+        jButtonC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCActionPerformed(evt);
+            }
+        });
 
         jButtonBorrar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonBorrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -213,10 +255,20 @@ public class calculadora extends javax.swing.JFrame {
         jButtonIgual.setBackground(new java.awt.Color(255, 255, 255));
         jButtonIgual.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonIgual.setText("=");
+        jButtonIgual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonIgualActionPerformed(evt);
+            }
+        });
 
         jButtonMenos1.setBackground(new java.awt.Color(255, 255, 255));
         jButtonMenos1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonMenos1.setText("1/×");
+        jButtonMenos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMenos1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -341,18 +393,41 @@ public class calculadora extends javax.swing.JFrame {
 
     private void jButtonCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCEActionPerformed
         // TODO add your handling code here:
+        String cadena = displayText.getText();
+        if(cadena.length()>0){
+            cadena = null;
+            displayText.setText(cadena);
+        }
     }//GEN-LAST:event_jButtonCEActionPerformed
 
     private void jButtonMultiplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMultiplicacionActionPerformed
         // TODO add your handling code here:
+        String cadena = displayText.getText();
+        Double num;
+        if(cadena.length()>0){
+            operando1 = cadena;
+            operador = "*";
+            displayText.setText("");
+        }
     }//GEN-LAST:event_jButtonMultiplicacionActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
         // TODO add your handling code here:
+        String cadena = displayText.getText();
+        if(cadena.length()>0){
+            cadena = cadena.substring(0, cadena.length()-1);
+            displayText.setText(cadena);
+        }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     private void jButtonCuadradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCuadradoActionPerformed
         // TODO add your handling code here:
+        String cadena = displayText.getText();
+        Double num;
+        if(cadena.length()>0){
+            num = Math.pow(Double.parseDouble(cadena),2);
+            displayText.setText(num.toString());
+        }
     }//GEN-LAST:event_jButtonCuadradoActionPerformed
 
     private void jButtonNum1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum1ActionPerformed
@@ -395,6 +470,171 @@ public class calculadora extends javax.swing.JFrame {
         displayText.setText(displayText.getText()+"9");
     }//GEN-LAST:event_jButtonNum9ActionPerformed
 
+    private void jButtonPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPuntoActionPerformed
+        // TODO add your handling code here:
+        String cadena = displayText.getText();
+        
+        if(cadena.length()<=0){//Si no hay valor en el display
+            displayText.setText("0.");
+        }
+        else{
+            if(!existePunto(displayText.getText())){
+                displayText.setText(cadena+".");
+            }
+        }
+    }//GEN-LAST:event_jButtonPuntoActionPerformed
+
+    private void jButtonMenos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMenos1ActionPerformed
+        // TODO add your handling code here:
+        String cadena = displayText.getText();
+        Double num;
+        if(cadena.length()>0){
+            num = 1/((Double.parseDouble(cadena)));
+            displayText.setText(num.toString());
+        }
+    }//GEN-LAST:event_jButtonMenos1ActionPerformed
+
+    private void jButtonMasMenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMasMenosActionPerformed
+        // TODO add your handling code here:
+        String cadena = displayText.getText();
+        Double num;
+        if(cadena.length()>0){
+            num = (-1)*((Double.parseDouble(cadena)));
+            displayText.setText(num.toString());
+        }
+    }//GEN-LAST:event_jButtonMasMenosActionPerformed
+
+    private void jButtonRestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestaActionPerformed
+        // TODO add your handling code here:
+        String cadena = displayText.getText();
+        Double num;
+        if(cadena.length()>0){
+            operando1 = cadena;
+            operador = "-";
+            displayText.setText("");
+        }
+    }//GEN-LAST:event_jButtonRestaActionPerformed
+
+    private void jButtonSumaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSumaActionPerformed
+        // TODO add your handling code here:
+        String cadena = displayText.getText();
+        Double num;
+        if(cadena.length()>0){
+            operando1 = cadena;
+            operador = "+";
+            displayText.setText("");
+        }
+    }//GEN-LAST:event_jButtonSumaActionPerformed
+
+    private void jButtonDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDivisionActionPerformed
+        // TODO add your handling code here:
+        String cadena = displayText.getText();
+        Double num;
+        if(cadena.length()>0){
+            operando1 = cadena;
+            operador = "/";
+            displayText.setText("");
+        }
+    }//GEN-LAST:event_jButtonDivisionActionPerformed
+
+    private void jButtonIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIgualActionPerformed
+        // TODO add your handling code here:
+        String cadena = displayText.getText();
+        String resultado;
+        operando2 = displayText.getText();
+        Double num;
+        if(operando2.length()>0 && operando3 == 0.0){
+            resultado = calcula(operando1, operando2, operador);
+            displayText.setText(resultado);
+        }
+        else if(operando3 != 0.0){
+            displayText.setText(operando3.toString());
+        }
+        else if(cadena.length() > 0){
+            displayText.setText(cadena);
+        }
+    }//GEN-LAST:event_jButtonIgualActionPerformed
+
+    private void jButtonCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCActionPerformed
+        // TODO add your handling code here:
+        operando1 = null;
+        operando2 = null;
+        operando3 = 0.0;
+        operador = null;
+        displayText.setText(null);
+    }//GEN-LAST:event_jButtonCActionPerformed
+
+    private void jButtonRaizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaizActionPerformed
+        // TODO add your handling code here:
+        String cadena = displayText.getText();
+        Double num;
+        if(cadena.length()>0){
+            num = Math.pow(Double.parseDouble(cadena),0.5);
+            displayText.setText(num.toString());
+        }
+    }//GEN-LAST:event_jButtonRaizActionPerformed
+
+    private void jButtonPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPorcentajeActionPerformed
+        // TODO add your handling code here:
+        operando2 = displayText.getText();
+        Double num;
+        System.out.println(operando1);
+        System.out.println(operando2);
+        System.out.println(operador);
+        if(operando1.length()>0 && operador.length()>0 && operando2.length()>0){
+            displayText.setText(calculaPorcentaje(operando1,operando2,operador));
+        }
+    }//GEN-LAST:event_jButtonPorcentajeActionPerformed
+
+    public static String calculaPorcentaje(String operando1, String operando2, String operador){
+        Double resultado = 0.0;
+        if(operador.equals("-")){
+            resultado = ((Double.parseDouble(operando2)*(Double.parseDouble(operando1)))/100);
+            operando3 = Double.parseDouble(operando1) - resultado;
+        }
+        else if(operador.equals("+")){
+            resultado = ((Double.parseDouble(operando2)*(Double.parseDouble(operando1)))/100);
+            operando3 = Double.parseDouble(operando1) + resultado;
+        }
+        else if(operador.equals("*")){
+            resultado = (Double.parseDouble(operando1) * Double.parseDouble(operando2))/100;
+        }
+        else if(operador.equals("/")){
+            resultado = Double.parseDouble(operando1) / Double.parseDouble(operando2);
+        }
+        
+        return resultado.toString();
+    }
+    
+    
+    
+    public static String calcula(String operando1, String operando2, String operador){
+        Double resultado = 0.0;
+        if(operador.equals("-")){
+            resultado = Double.parseDouble(operando1) - Double.parseDouble(operando2);
+        }
+        else if(operador.equals("+")){
+            resultado = Double.parseDouble(operando1) + Double.parseDouble(operando2);
+        }
+        else if(operador.equals("*")){
+            resultado = Double.parseDouble(operando1) * Double.parseDouble(operando2);
+        }
+        else if(operador.equals("/")){
+            resultado = Double.parseDouble(operando1) / Double.parseDouble(operando2);
+        }
+        
+        return resultado.toString();
+    }
+    public static boolean existePunto(String cadena){
+        boolean existePunto = false;
+        if(cadena.contains(".")){
+            existePunto = true;
+        }
+        else{
+            existePunto = false;
+        }
+        return existePunto;
+    }
     /**
      * @param args the command line arguments
      */
