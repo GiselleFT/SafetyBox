@@ -4,8 +4,13 @@ public class calculadora extends javax.swing.JFrame {
 
     String operando1;
     String operando2;
+    boolean existeOperando2 = false;
+    boolean existePorcentaje = false;
+    static String operando2Aux;
     static Double operando3 = 0.0;
     String operador;
+    String operador2;
+    static String operadorAux;
     public calculadora() {
         initComponents();
         setLocationRelativeTo(null);
@@ -539,20 +544,56 @@ public class calculadora extends javax.swing.JFrame {
 
     private void jButtonIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIgualActionPerformed
         // TODO add your handling code here:
-        String cadena = displayText.getText();
+        String cadena = null;
         String resultado;
         operando2 = displayText.getText();
+        if(!existeOperando2){//Para conservar el valor
+            operando2Aux = operando2;
+            System.out.println(operando2Aux);
+            existeOperando2 = true;
+        }
+       
+
         Double num;
-        if(operando2.length()>0 && operando3 == 0.0){
-            resultado = calcula(operando1, operando2, operador);
-            displayText.setText(resultado);
+        if(operando3 == 0.0){
+            if(operador2.length()>0 && operador2.equals("%")){
+                operando2 = operando2Aux;
+                resultado = calcula(operando1, operando2, operador);
+                displayText.setText(resultado);
+                System.out.println("Camino1");
+                System.out.println("Operando1 =" + operando1);
+                System.out.println("Operador = " + operador);
+                System.out.println("Operando2 = " + operando2);
+                operando1 = resultado;
+//                if(existePorcentaje){
+////                    operadorAux = operador;
+//                    existePorcentaje = false;
+//                }
+//                existePorcentaje = false;
+            }
+            else{
+                System.out.println("entre aqui");
+//                if(!existePorcentaje && operadorAux.equals(operador)){
+//                    operador2 = "%";
+//                }
+                resultado = calcula(operando1, operando2, operador);
+                displayText.setText(resultado);
+                
+            }
         }
-        else if(operando3 != 0.0){
+        else if(operando3 != 0.0 && operador2.equals("%")){
             displayText.setText(operando3.toString());
+            operando1 = operando3.toString();
+            operando2 = operando2Aux;
+            System.out.println("Camino2");
+            System.out.println("Operando1 =" + operando1);
+            System.out.println("Operador = " + operador);
+            System.out.println("Operanado2 = " + operando2);
+            operando3 = 0.0;
         }
-        else if(cadena.length() > 0){
-            displayText.setText(cadena);
-        }
+//        else if(cadena.length() > 0){
+//            displayText.setText(cadena);
+//        }
     }//GEN-LAST:event_jButtonIgualActionPerformed
 
     private void jButtonCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCActionPerformed
@@ -561,6 +602,7 @@ public class calculadora extends javax.swing.JFrame {
         operando2 = null;
         operando3 = 0.0;
         operador = null;
+        operador2 = " ";
         displayText.setText(null);
     }//GEN-LAST:event_jButtonCActionPerformed
 
@@ -576,6 +618,7 @@ public class calculadora extends javax.swing.JFrame {
 
     private void jButtonPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPorcentajeActionPerformed
         // TODO add your handling code here:
+        operador2 = "%";
         operando2 = displayText.getText();
         Double num;
         System.out.println(operando1);
