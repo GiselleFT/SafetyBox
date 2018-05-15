@@ -12,49 +12,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class calculadora extends javax.swing.JFrame {
+public class calculadoraContrasenaComp extends javax.swing.JFrame {
 
-    String contrasena;
-    String operando1;
-    String operando2;
-    boolean existeOperando2 = false;
-    boolean existePorcentaje = false;
-    static String operando2Aux;
-    static Double operando3 = 0.0;
-    String operador;
-    String operador2;
-    static String operadorAux;
-    String secret_word = "";
+    String contrasena = "";
 
-    public calculadora() {
-           initComponents();
-            setLocationRelativeTo(null);
-            this.jButtonC.doClick();
-        
-        //*******************
-        try {
+    public calculadoraContrasenaComp() {
 
-            //******************************GUARDAMOS EL SHA******************************
-            FileReader fr = null;
-            FileWriter fw = null;
-            PrintWriter pw = null;
-
-            int caract = 0;
-            fr = new FileReader("c.txt");
-            caract = fr.read();
-            while (caract != -1) {
-                secret_word = secret_word + (char) caract;
-                caract = fr.read();
-            }
-            System.out.println("sha en c: <" + secret_word + ">");
-            
-            //***************************************************************
-        } catch (IOException ex) {
-            dispose();
-            new MenuNombre().setVisible(true);
-        }
-        //*************
-        
+        initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -91,6 +56,8 @@ public class calculadora extends javax.swing.JFrame {
         jButtonBorrar = new javax.swing.JButton();
         jButtonIgual = new javax.swing.JButton();
         jButtonMenos1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -316,6 +283,10 @@ public class calculadora extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("= - Confirmar");
+
+        jLabel2.setText("C - Borrar contraseña");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -323,9 +294,7 @@ public class calculadora extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(displayText, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(displayText, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,11 +335,23 @@ public class calculadora extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButtonIgual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(37, 37, 37))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(122, 122, 122)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(98, 98, 98))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(displayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,345 +414,162 @@ public class calculadora extends javax.swing.JFrame {
 
     private void jButtonNum7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum7ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "7");
         contrasena += "7";
     }//GEN-LAST:event_jButtonNum7ActionPerformed
 
     private void jButtonNum3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum3ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "3");
         contrasena += "3";
     }//GEN-LAST:event_jButtonNum3ActionPerformed
 
     private void jButtonCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCEActionPerformed
         // TODO add your handling code here:
-        String cadena = displayText.getText();
-        if (cadena.length() > 0) {
-            cadena = null;
-            displayText.setText(cadena);
-        }
         contrasena += "CE";
     }//GEN-LAST:event_jButtonCEActionPerformed
 
     private void jButtonMultiplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMultiplicacionActionPerformed
         // TODO add your handling code here:
-        if (operando1 != null) {
-            this.jButtonIgual.doClick();
-        }
-        String cadena = displayText.getText();
-        Double num;
-        if (cadena.length() > 0) {
-            operando1 = cadena;
-            operador = "*";
-            displayText.setText("");
-        }
         contrasena += "*";
     }//GEN-LAST:event_jButtonMultiplicacionActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
         // TODO add your handling code here:
-        String cadena = displayText.getText();
-        if (cadena.length() > 0) {
-            cadena = cadena.substring(0, cadena.length() - 1);
-            displayText.setText(cadena);
-        }
         contrasena += "B";
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     private void jButtonCuadradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCuadradoActionPerformed
         // TODO add your handling code here:
-        String cadena = displayText.getText();
-        Double num;
-        if (cadena.length() > 0) {
-            num = Math.pow(Double.parseDouble(cadena), 2);
-            displayText.setText(num.toString());
-        }
         contrasena += "^2";
     }//GEN-LAST:event_jButtonCuadradoActionPerformed
 
     private void jButtonNum1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum1ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "1");
         contrasena += "1";
     }//GEN-LAST:event_jButtonNum1ActionPerformed
 
     private void jButtonNum0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum0ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "0");
         contrasena += "0";
     }//GEN-LAST:event_jButtonNum0ActionPerformed
 
     private void jButtonNum2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum2ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "2");
         contrasena += "2";
     }//GEN-LAST:event_jButtonNum2ActionPerformed
 
     private void jButtonNum4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum4ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "4");
         contrasena += "4";
     }//GEN-LAST:event_jButtonNum4ActionPerformed
 
     private void jButtonNum5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum5ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "5");
         contrasena += "5";
     }//GEN-LAST:event_jButtonNum5ActionPerformed
 
     private void jButtonNum6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum6ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "6");
         contrasena += "6";
     }//GEN-LAST:event_jButtonNum6ActionPerformed
 
     private void jButtonNum8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum8ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "8");
         contrasena += "8";
     }//GEN-LAST:event_jButtonNum8ActionPerformed
 
     private void jButtonNum9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNum9ActionPerformed
         // TODO add your handling code here:
-        displayText.setText(displayText.getText() + "9");
         contrasena += "9";
     }//GEN-LAST:event_jButtonNum9ActionPerformed
 
     private void jButtonPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPuntoActionPerformed
         // TODO add your handling code here:
         contrasena += ".";
-        String cadena = displayText.getText();
-
-        if (cadena.length() <= 0) {//Si no hay valor en el display
-            displayText.setText("0.");
-        } else {
-            if (!existePunto(displayText.getText())) {
-                displayText.setText(cadena + ".");
-            }
-        }
-
     }//GEN-LAST:event_jButtonPuntoActionPerformed
 
     private void jButtonMenos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMenos1ActionPerformed
         // TODO add your handling code here:
         contrasena += "?";
-        String cadena = displayText.getText();
-        Double num;
-        if (cadena.length() > 0) {
-            num = 1 / ((Double.parseDouble(cadena)));
-            displayText.setText(num.toString());
-        }
-
     }//GEN-LAST:event_jButtonMenos1ActionPerformed
 
     private void jButtonMasMenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMasMenosActionPerformed
         // TODO add your handling code here:
         contrasena += "#";
-        String cadena = displayText.getText();
-        Double num;
-        if (cadena.length() > 0) {
-            num = (-1) * ((Double.parseDouble(cadena)));
-            displayText.setText(num.toString());
-        }
-
     }//GEN-LAST:event_jButtonMasMenosActionPerformed
 
     private void jButtonRestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestaActionPerformed
         // TODO add your handling code here:
         contrasena += "-";
-        if (operando1 != null) {
-            this.jButtonIgual.doClick();
-        }
-        String cadena = displayText.getText();
-        Double num;
-        if (cadena.length() > 0) {
-            operando1 = cadena;
-            operador = "-";
-            displayText.setText("");
-        }
     }//GEN-LAST:event_jButtonRestaActionPerformed
 
     private void jButtonSumaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSumaActionPerformed
         // TODO add your handling code here:
         contrasena += "+";
-        if (operando1 != null) {
-            this.jButtonIgual.doClick();
-        }
-
-        String cadena = displayText.getText();
-        Double num;
-        if (cadena.length() > 0) {
-            operando1 = cadena;
-            operador = "+";
-            displayText.setText("");
-        }
     }//GEN-LAST:event_jButtonSumaActionPerformed
 
     private void jButtonDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDivisionActionPerformed
         // TODO add your handling code here:
         contrasena += "/";
-        if (operando1 != null) {
-            this.jButtonIgual.doClick();
-        }
-        String cadena = displayText.getText();
-        Double num;
-        if (cadena.length() > 0) {
-            operando1 = cadena;
-            operador = "/";
-            displayText.setText("");
-        }
     }//GEN-LAST:event_jButtonDivisionActionPerformed
 
     private void jButtonIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIgualActionPerformed
         // TODO add your handling code here:
         System.out.println(contrasena);
-        //**************************LE HACEMOS SHA A LO QUE VIENE COMO CONTRASEÑA *******************************
-        String sha = "";
-        MessageDigest messageDigest2 = null;
         try {
-            messageDigest2 = MessageDigest.getInstance("SHA"); // Inicializa SHA-1
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(calculadora.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        messageDigest2.update(contrasena.getBytes());
-        byte[] resumen2 = messageDigest2.digest();
-        for (int i = 0; i < resumen2.length; i++) {
-            sha += Integer.toHexString((resumen2[i] >> 4) & 0xf);
-            sha += Integer.toHexString(resumen2[i] & 0xf);
-        }
-        System.out.println("SHA-1: " + sha);
-        if (sha.equals(secret_word)) {
-            JOptionPane.showMessageDialog(null, "Viene el reconocimiento facial");
-        }
-        //**************************LE HACEMOS SHA A LO QUE VIENE COMO CONTRASEÑA *******************************
-        String cadena = null;
-        String resultado;
-        operando2 = displayText.getText();
-        if (!existeOperando2) {//Para conservar el valor
-            operando2Aux = operando2;
-            System.out.println(operando2Aux);
-            existeOperando2 = true;
-        }
-
-        Double num;
-        if (operando3 == 0.0) {
-            if (operador2.length() > 0 && operador2.equals("%")) {
-                operando2 = operando2Aux;
-                resultado = calcula(operando1, operando2, operador);
-                displayText.setText(resultado);
-                System.out.println("Camino1");
-                System.out.println("Operando1 =" + operando1);
-                System.out.println("Operador = " + operador);
-                System.out.println("Operando2 = " + operando2);
-                operando1 = resultado;
-//                if(existePorcentaje){
-////                    operadorAux = operador;
-//                    existePorcentaje = false;
-//                }
-//                existePorcentaje = false;
-            } else {
-                System.out.println("entre aqui");
-//                if(!existePorcentaje && operadorAux.equals(operador)){
-//                    operador2 = "%";
-//                }
-                resultado = calcula(operando1, operando2, operador);
-                displayText.setText(resultado);
-                System.out.println(resultado);
-
+            String sha = "";
+            MessageDigest messageDigest2 = MessageDigest.getInstance("SHA"); // Inicializa SHA-1
+            messageDigest2.update(contrasena.getBytes());
+            byte[] resumen2 = messageDigest2.digest();
+            for (int i = 0; i < resumen2.length; i++) {
+                sha += Integer.toHexString((resumen2[i] >> 4) & 0xf);
+                sha += Integer.toHexString(resumen2[i] & 0xf);
             }
-        } else if (operando3 != 0.0 && operador2.equals("%")) {
-            displayText.setText(operando3.toString());
-            operando1 = operando3.toString();
-            operando2 = operando2Aux;
-            System.out.println("Camino2");
-            System.out.println("Operando1 =" + operando1);
-            System.out.println("Operador = " + operador);
-            System.out.println("Operanado2 = " + operando2);
-            operando3 = 0.0;
+            System.out.println("SHA-1: " + sha);
+            //******************************GUARDAMOS EL SHA******************************
+            FileReader fr = null;
+            FileWriter fw = null;
+            PrintWriter pw = null;
+            String final_word = "";
+            int caract = 0;
+            fr = new FileReader("c.txt");
+            caract = fr.read();
+            while (caract != -1) {
+                final_word = final_word + (char) caract;
+                caract = fr.read();
+            }
+            System.out.println("sha en c: <"+final_word+">");
+            if (final_word.equals(sha)) {
+                System.out.println("si es la misma");
+                dispose2();
+            }
+            else{
+                new Contrasena(0).setVisible(true);
+                dispose();
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, vuelve a intentarlo");
+            }
+            //***************************************************************
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(calculadoraContrasenaComp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(calculadoraContrasenaComp.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        else if(cadena.length() > 0){
-//            displayText.setText(cadena);
-//        }
-        contrasena = "";
+        
     }//GEN-LAST:event_jButtonIgualActionPerformed
 
     private void jButtonCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCActionPerformed
         // TODO add your handling code here:
         contrasena = "";
-        operando1 = null;
-        operando2 = null;
-        operando3 = 0.0;
-        operador = null;
-        operador2 = " ";
-        displayText.setText(null);
     }//GEN-LAST:event_jButtonCActionPerformed
 
     private void jButtonRaizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRaizActionPerformed
         // TODO add your handling code here:
         contrasena += "$";
-        String cadena = displayText.getText();
-        Double num;
-        if (cadena.length() > 0) {
-            num = Math.pow(Double.parseDouble(cadena), 0.5);
-            displayText.setText(num.toString());
-        }
     }//GEN-LAST:event_jButtonRaizActionPerformed
 
     private void jButtonPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPorcentajeActionPerformed
         // TODO add your handling code here:
         contrasena += "%";
-        operador2 = "%";
-        operando2 = displayText.getText();
-        Double num;
-        System.out.println(operando1);
-        System.out.println(operando2);
-        System.out.println(operador);
-        if (operando1.length() > 0 && operador.length() > 0 && operando2.length() > 0) {
-            displayText.setText(calculaPorcentaje(operando1, operando2, operador));
-        }
     }//GEN-LAST:event_jButtonPorcentajeActionPerformed
-
-    public static String calculaPorcentaje(String operando1, String operando2, String operador) {
-        Double resultado = 0.0;
-        if (operador.equals("-")) {
-            resultado = ((Double.parseDouble(operando2) * (Double.parseDouble(operando1))) / 100);
-            operando3 = Double.parseDouble(operando1) - resultado;
-        } else if (operador.equals("+")) {
-            resultado = ((Double.parseDouble(operando2) * (Double.parseDouble(operando1))) / 100);
-            operando3 = Double.parseDouble(operando1) + resultado;
-        } else if (operador.equals("*")) {
-            resultado = (Double.parseDouble(operando1) * Double.parseDouble(operando2)) / 100;
-        } else if (operador.equals("/")) {
-            resultado = Double.parseDouble(operando1) / Double.parseDouble(operando2);
-        }
-
-        return resultado.toString();
-    }
-
-    public static String calcula(String operando1, String operando2, String operador) {
-        Double resultado = 0.0;
-        if (operador.equals("-")) {
-            resultado = Double.parseDouble(operando1) - Double.parseDouble(operando2);
-        } else if (operador.equals("+")) {
-            resultado = Double.parseDouble(operando1) + Double.parseDouble(operando2);
-        } else if (operador.equals("*")) {
-            resultado = Double.parseDouble(operando1) * Double.parseDouble(operando2);
-        } else if (operador.equals("/")) {
-            resultado = Double.parseDouble(operando1) / Double.parseDouble(operando2);
-        }
-
-        return resultado.toString();
-    }
-
-    public static boolean existePunto(String cadena) {
-        boolean existePunto = false;
-        if (cadena.contains(".")) {
-            existePunto = true;
-        } else {
-            existePunto = false;
-        }
-        return existePunto;
-    }
 
     /**
      * @param args the command line arguments
@@ -790,32 +588,29 @@ public class calculadora extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(calculadora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadoraContrasenaComp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(calculadora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadoraContrasenaComp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(calculadora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadoraContrasenaComp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(calculadora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadoraContrasenaComp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        try {
-            FileReader fr = null;
-            FileWriter fw = null;
-            PrintWriter pw = null;
-            int caract = 0;
-            fr = new FileReader("c.txt");
-            java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new calculadora().setVisible(true);
+                new calculadoraContrasenaComp().setVisible(true);
             }
         });
-        } catch (IOException ex) {
-            new MenuNombre().setVisible(true);
-        }
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -844,5 +639,10 @@ public class calculadora extends javax.swing.JFrame {
     private javax.swing.JButton jButtonRaiz;
     private javax.swing.JButton jButtonResta;
     private javax.swing.JButton jButtonSuma;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+
+    public void dispose2() {
+    }
 }
