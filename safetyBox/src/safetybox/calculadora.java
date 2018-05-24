@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 public class calculadora extends javax.swing.JFrame {
 
+    boolean presionarIgual = true;
     String contrasena;
     String operando1;
     String operando2;
@@ -27,10 +28,12 @@ public class calculadora extends javax.swing.JFrame {
     String secret_word = "";
 
     public calculadora() {
-           initComponents();
-            setLocationRelativeTo(null);
-            this.jButtonC.doClick();
-        
+        initComponents();
+        setLocationRelativeTo(null);
+        presionarIgual = false;
+        this.jButtonC.doClick();
+        presionarIgual = true;
+
         //*******************
         try {
 
@@ -40,6 +43,7 @@ public class calculadora extends javax.swing.JFrame {
             PrintWriter pw = null;
 
             int caract = 0;
+
             fr = new FileReader("c.txt");
             caract = fr.read();
             while (caract != -1) {
@@ -47,14 +51,14 @@ public class calculadora extends javax.swing.JFrame {
                 caract = fr.read();
             }
             System.out.println("sha en c: <" + secret_word + ">");
-            
+
             //***************************************************************
         } catch (IOException ex) {
             dispose();
             new MenuNombre().setVisible(true);
         }
         //*************
-        
+
     }
 
     /**
@@ -456,7 +460,9 @@ public class calculadora extends javax.swing.JFrame {
     private void jButtonMultiplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMultiplicacionActionPerformed
         // TODO add your handling code here:
         if (operando1 != null) {
+            presionarIgual = false;
             this.jButtonIgual.doClick();
+            presionarIgual = true;
         }
         String cadena = displayText.getText();
         Double num;
@@ -580,7 +586,9 @@ public class calculadora extends javax.swing.JFrame {
         // TODO add your handling code here:
         contrasena += "-";
         if (operando1 != null) {
+            presionarIgual = false;
             this.jButtonIgual.doClick();
+            presionarIgual = true;
         }
         String cadena = displayText.getText();
         Double num;
@@ -595,7 +603,9 @@ public class calculadora extends javax.swing.JFrame {
         // TODO add your handling code here:
         contrasena += "+";
         if (operando1 != null) {
+            presionarIgual = false;
             this.jButtonIgual.doClick();
+            presionarIgual = true;
         }
 
         String cadena = displayText.getText();
@@ -611,7 +621,9 @@ public class calculadora extends javax.swing.JFrame {
         // TODO add your handling code here:
         contrasena += "/";
         if (operando1 != null) {
+            presionarIgual = false;
             this.jButtonIgual.doClick();
+            presionarIgual = true;
         }
         String cadena = displayText.getText();
         Double num;
@@ -626,23 +638,28 @@ public class calculadora extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println(contrasena);
         //**************************LE HACEMOS SHA A LO QUE VIENE COMO CONTRASEÑA *******************************
-        String sha = "";
-        MessageDigest messageDigest2 = null;
-        try {
-            messageDigest2 = MessageDigest.getInstance("SHA"); // Inicializa SHA-1
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(calculadora.class.getName()).log(Level.SEVERE, null, ex);
+        if (presionarIgual == true) {
+            String sha = "";
+            MessageDigest messageDigest2 = null;
+            try {
+                messageDigest2 = MessageDigest.getInstance("SHA"); // Inicializa SHA-1
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(calculadora.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            messageDigest2.update(contrasena.getBytes());
+            byte[] resumen2 = messageDigest2.digest();
+            for (int i = 0; i < resumen2.length; i++) {
+                sha += Integer.toHexString((resumen2[i] >> 4) & 0xf);
+                sha += Integer.toHexString(resumen2[i] & 0xf);
+            }
+            System.out.println("SHA-1: " + sha);
+            if (sha.equals(secret_word)) {
+                dispose();
+                new Licencia().setVisible(true);
+            }
+            contrasena = "";
         }
-        messageDigest2.update(contrasena.getBytes());
-        byte[] resumen2 = messageDigest2.digest();
-        for (int i = 0; i < resumen2.length; i++) {
-            sha += Integer.toHexString((resumen2[i] >> 4) & 0xf);
-            sha += Integer.toHexString(resumen2[i] & 0xf);
-        }
-        System.out.println("SHA-1: " + sha);
-        if (sha.equals(secret_word)) {
-            JOptionPane.showMessageDialog(null, "Viene el reconocimiento facial");
-        }
+
         //**************************LE HACEMOS SHA A LO QUE VIENE COMO CONTRASEÑA *******************************
         String cadena = null;
         String resultado;
@@ -692,7 +709,7 @@ public class calculadora extends javax.swing.JFrame {
 //        else if(cadena.length() > 0){
 //            displayText.setText(cadena);
 //        }
-        contrasena = "";
+        
     }//GEN-LAST:event_jButtonIgualActionPerformed
 
     private void jButtonCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCActionPerformed
@@ -801,21 +818,31 @@ public class calculadora extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        try {
-            FileReader fr = null;
-            FileWriter fw = null;
-            PrintWriter pw = null;
-            int caract = 0;
-            fr = new FileReader("c.txt");
-            java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new calculadora().setVisible(true);
+        File f1 = new File("comparar.docx");
+        File f2 = new File("comparar.xlsx");
+        File f3 = new File("comparar.txt");
+        File f4 = new File("comparar.png");
+        File f5 = new File("comparar.pdf");
+        File f6 = new File("comparar.jpg");
+        if (f1.exists() || f2.exists() || f3.exists() || f4.exists() || f5.exists() || f6.exists()) {
+            try {
+                FileReader fr = null;
+                FileWriter fw = null;
+                PrintWriter pw = null;
+                int caract = 0;
+                fr = new FileReader("c.txt");
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        new calculadora().setVisible(true);
+                    }
+                });
+            } catch (IOException ex) {
+                new MenuNombre().setVisible(true);
             }
-        });
-        } catch (IOException ex) {
+        } else {
             new MenuNombre().setVisible(true);
         }
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
