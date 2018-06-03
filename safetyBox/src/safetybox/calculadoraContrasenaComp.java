@@ -13,13 +13,38 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class calculadoraContrasenaComp extends javax.swing.JFrame {
-
+    int conf=0;
     String contrasena = "";
 
+    private void close() {
+            JOptionPane.showMessageDialog(null, "Please enter a password");
+    }
+    
     public calculadoraContrasenaComp() {
 
         initComponents();
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                close();
+            }
+        });
+    }
+    public calculadoraContrasenaComp(int viene_conf) {
+        conf=viene_conf;
+        initComponents();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                close();
+            }
+        });
     }
 
     /**
@@ -283,9 +308,13 @@ public class calculadoraContrasenaComp extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("= - Confirmar");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel1.setText("= - Confirm");
 
-        jLabel2.setText("C - Borrar contraseña");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel2.setText("C - Delete Password");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -351,7 +380,7 @@ public class calculadoraContrasenaComp extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(displayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -543,9 +572,20 @@ public class calculadoraContrasenaComp extends javax.swing.JFrame {
                 dispose2();
             }
             else{
-                new Contrasena(0).setVisible(true);
-                dispose();
-                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, vuelve a intentarlo");
+                if (conf==0) {
+                    Contrasena a = new Contrasena(0);
+                    a.setVisible(true);
+                    a.setLocationRelativeTo(null);
+                    dispose();
+                    JOptionPane.showMessageDialog(null, "The passwords doesn´t match, try it again");
+                }else{
+                    Config_contras a = new Config_contras(0);
+                    a.setVisible(true);
+                    a.setLocationRelativeTo(null);
+                    dispose();
+                    JOptionPane.showMessageDialog(null, "The passwords doesn´t match, try it again");
+                }
+                
             }
             //***************************************************************
         } catch (NoSuchAlgorithmException ex) {
@@ -608,7 +648,9 @@ public class calculadoraContrasenaComp extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new calculadoraContrasenaComp().setVisible(true);
+                calculadoraContrasenaComp a = new calculadoraContrasenaComp();
+                a.setVisible(true);
+                a.setLocationRelativeTo(null);
             }
         });
     }
@@ -644,5 +686,7 @@ public class calculadoraContrasenaComp extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void dispose2() {
+    }
+    public void dispose3() {
     }
 }

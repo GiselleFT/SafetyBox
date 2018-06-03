@@ -24,14 +24,13 @@ public class DES_AES {
     int repeticion = 0;
     static IvParameterSpec paramSpec, paramSpec_aux;
     SecretKey key_aux;
-
+    
     public DES_AES() {
     }
 
     public static void Encrypt(InputStream in, OutputStream out) throws IOException {
         byte[] header = new byte[54];
         in.read(header);
-        System.out.println("vive");
         out.write(header, 0, 54);
         CipherOutputStream cos = new CipherOutputStream(out, ecipher);
         byte[] bytes = new byte[64];
@@ -43,8 +42,7 @@ public class DES_AES {
         cos.flush();
         cos.close();
         in.close();
-        out.close();
-
+        out.close();      
     }
 
     public static void Decrypt(InputStream in, OutputStream out) throws IOException {
@@ -69,7 +67,7 @@ public class DES_AES {
         IvParameterSpec iv8 = new IvParameterSpec(new byte[]{(byte) 0x8E, 0x12, 0x39, (byte) 0x9C, 0x07, 0x72, 0x6F, 0x5A});//CBC,OFB,CFB
         IvParameterSpec iv = new IvParameterSpec(new byte[]{(byte) 0x8E, 0x12, 0x39, (byte) 0x9C, 0x07, 0x72, 0x6F, 0x5A, (byte) 0x8E, 0x12, 0x39, (byte) 0x9C, 0x07, 0x72, 0x6F, 0x5A});//CBC,OFB,CFB
 
-        type = "OFB";
+        type = "CBC";
         String cipher = "AES";
         ecipher = Cipher.getInstance(cipher + "/" + type + "/NoPadding");
         dcipher = Cipher.getInstance(cipher + "/" + type + "/NoPadding");

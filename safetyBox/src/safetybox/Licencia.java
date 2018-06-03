@@ -93,7 +93,9 @@ public class Licencia extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
-        new calculadora().setVisible(true);
+        calculadora a = new calculadora();
+        a.setVisible(true);
+        a.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -146,7 +148,9 @@ public class Licencia extends javax.swing.JFrame {
                     if (total.equals(total2)) {
                         //son iguales 
                         dispose();
-                        new Administrador_archivos().setVisible(true);
+                        Administrador_archivos a = new Administrador_archivos();
+                        a.setVisible(true);
+                        a.setLocationRelativeTo(null);
                     } else {
                         //archivos distintos
                         JOptionPane.showMessageDialog(null, "Licencia inválida");
@@ -190,7 +194,9 @@ public class Licencia extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Licencia().setVisible(true);
+                Licencia a = new Licencia();
+                a.setVisible(true);
+                a.setLocationRelativeTo(null);
             }
         });
     }

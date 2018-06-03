@@ -10,9 +10,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  *
@@ -28,6 +34,7 @@ public class Administrador_archivos extends javax.swing.JFrame {
     FileInputStream entrada;
     FileOutputStream salida;
     DES_AES DesAesCipher = new DES_AES();
+    int archivo_cargado = 0;
 
     /**
      * Creates new form Administrador_archivos
@@ -50,17 +57,22 @@ public class Administrador_archivos extends javax.swing.JFrame {
         lblimagen = new javax.swing.JLabel();
         BtnDecryptImage = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnConf = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestion Archivos");
 
-        BtnAbrirArchivo.setText("Abrir archivo");
+        BtnAbrirArchivo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        BtnAbrirArchivo.setText("Select File");
         BtnAbrirArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAbrirArchivoActionPerformed(evt);
             }
         });
 
+        btnEncryptImage.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnEncryptImage.setForeground(new java.awt.Color(0, 0, 204));
         btnEncryptImage.setText("Encrypt");
         btnEncryptImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,8 +80,11 @@ public class Administrador_archivos extends javax.swing.JFrame {
             }
         });
 
-        lblimagen.setText("Seleccionaste el archivo: *******");
+        lblimagen.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblimagen.setText("Selected File : * * * * * * *");
 
+        BtnDecryptImage.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        BtnDecryptImage.setForeground(new java.awt.Color(204, 0, 0));
         BtnDecryptImage.setText("Decrypt");
         BtnDecryptImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +92,7 @@ public class Administrador_archivos extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jButton1.setText("Return");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,50 +100,69 @@ public class Administrador_archivos extends javax.swing.JFrame {
             }
         });
 
+        btnConf.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnConf.setText("Conf");
+        btnConf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(btnEncryptImage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BtnDecryptImage)
-                .addGap(41, 41, 41))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(BtnAbrirArchivo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(lblimagen))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(jButton1)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEncryptImage)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BtnDecryptImage))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnConf))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(BtnAbrirArchivo)
+                        .addGap(0, 141, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblimagen)
+                .addGap(120, 120, 120))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(BtnAbrirArchivo)
-                .addGap(18, 18, 18)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEncryptImage)
                     .addComponent(BtnDecryptImage))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblimagen)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btnConf))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnAbrirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbrirArchivoActionPerformed
-        if (seleccionado.showDialog(null, "Abrir archivo") == JFileChooser.APPROVE_OPTION) {
+        if (seleccionado.showDialog(null, "Open file") == JFileChooser.APPROVE_OPTION) {
             File archivo = seleccionado.getSelectedFile();
             ruta = archivo.getAbsolutePath();
             if (archivo.canRead()) {
@@ -135,16 +170,17 @@ public class Administrador_archivos extends javax.swing.JFrame {
                     bytesImg = AbrirAImagen(archivo);
                     System.out.println(bytesImg);
                     //this.lblimagen.setIcon(new ImageIcon(bytesImg));
-                    this.lblimagen.setText("Seleccionaste el archivo: " + archivo.getName());
+                    this.lblimagen.setText("Selected File: " + archivo.getName());
+                    archivo_cargado = 1;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Por favor seleccione un archivo .bmp");
+                    JOptionPane.showMessageDialog(null, "Please select a file with .bmp extension");
+                    archivo_cargado = 0;
                 }
 
             }
         }
     }//GEN-LAST:event_BtnAbrirArchivoActionPerformed
 
- 
     public String AbrirTexto(File archivo) {
         String contenido = "";
         try {
@@ -165,7 +201,7 @@ public class Administrador_archivos extends javax.swing.JFrame {
             salida = new FileOutputStream(archivo);
             byte[] bytesTxt = contenido.getBytes();
             salida.write(bytesTxt);
-            respuesta = "Se guardo el archivo";
+            respuesta = "Saved file";
         } catch (FileNotFoundException ex) {
         }
         return respuesta;
@@ -185,49 +221,77 @@ public class Administrador_archivos extends javax.swing.JFrame {
     public String decifrarImagen(File archivo) {
         String respuesta = null;
         try {
-            DesAesCipher.initDES_AES();//inicio DES_AES
-            FileInputStream Fin_d = new FileInputStream(archivo.getAbsolutePath());
-            FileOutputStream Fout_d = new FileOutputStream(archivo.getParent() + "/gftsal" + archivo.getName());
-            System.out.println(archivo.getParent());
-            DesAesCipher.Decrypt(Fin_d, Fout_d);
-            respuesta = "La imagen se guardo";
+            if (archivo_cargado == 1) {
+                DesAesCipher.initDES_AES();//inicio DES_AES
+                FileInputStream Fin_d = new FileInputStream(archivo.getAbsolutePath());
+                FileOutputStream Fout_d = new FileOutputStream(archivo.getParent() + "/gftsal" + archivo.getName());
+                System.out.println(archivo.getParent());
+                DesAesCipher.Decrypt(Fin_d, Fout_d);
+                respuesta = "Your image was deciphered !!";
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a file");
+            }
+
         } catch (Exception ex) {
             System.out.println(archivo.getParent());
             Logger.getLogger(Administrador_archivos.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
-    
+
     public String cifrarImagen(File archivo) {
         String respuesta = null;
         try {
-            DesAesCipher.initDES_AES();//inicio DES_AES
-            FileInputStream Fin_d = new FileInputStream(archivo.getAbsolutePath());
-            FileOutputStream Fout_d = new FileOutputStream(archivo.getParent() + "/gftsal" + archivo.getName());
-            System.out.println(archivo.getParent());
-            DesAesCipher.Encrypt(Fin_d, Fout_d);
-            respuesta = "La imagen se guardo";
+            if (archivo_cargado == 1) {
+                DesAesCipher.initDES_AES();//inicio DES_AES
+                FileInputStream Fin_d = new FileInputStream(archivo.getAbsolutePath());
+                FileOutputStream Fout_d = new FileOutputStream(archivo.getParent() + "/gftsal" + archivo.getName());
+                System.out.println(archivo.getParent());
+                DesAesCipher.Encrypt(Fin_d, Fout_d);
+                respuesta = "Your image was ciphered !!";
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a file");
+            }
+
         } catch (Exception ex) {
             System.out.println(archivo.getParent());
             Logger.getLogger(Administrador_archivos.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
+
+
     private void btnEncryptImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptImageActionPerformed
         File archivo = new File(ruta);
         if (archivo.getName().endsWith(".bmp")) {
             String respuesta = cifrarImagen(archivo);
             if (respuesta != null) {
-                File a = new File(archivo.getAbsolutePath());
-                a.delete();
-                File b = new File(archivo.getParent() + "/gftsal" + archivo.getName());
-                b.renameTo(a);                
-                JOptionPane.showMessageDialog(null, respuesta);
+                try {
+                    File a = new File(archivo.getAbsolutePath());
+                    a.delete();
+                    File b = new File(archivo.getParent() + "/gftsal" + archivo.getName());
+                    b.setReadable(false);
+                    b.setWritable(false);
+                    b.setExecutable(false);
+                    
+                    
+                    Path path = Paths.get(b.getAbsolutePath());
+                    Files.setAttribute(path, "dos:hidden", true, LinkOption.NOFOLLOW_LINKS);
+                    b.renameTo(a);
+                    JOptionPane.showMessageDialog(null, respuesta);
+                } catch (IOException ex) {
+                    Logger.getLogger(Administrador_archivos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "error al guardar imagen");
+                JOptionPane.showMessageDialog(null, "Ups, we have some problems with your image, try it again.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "la imagen se debe guardar en formato .bmp");
+            if (archivo.getName().length() > 0) {
+                JOptionPane.showMessageDialog(null, "Please select a file with .bmp extension");
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a file");
+            }
+
         }
     }//GEN-LAST:event_btnEncryptImageActionPerformed
 
@@ -239,21 +303,42 @@ public class Administrador_archivos extends javax.swing.JFrame {
                 File a = new File(archivo.getAbsolutePath());
                 a.delete();
                 File b = new File(archivo.getParent() + "/gftsal" + archivo.getName());
-                b.renameTo(a);
+                
                 JOptionPane.showMessageDialog(null, respuesta);
+                    Path path = Paths.get(b.getAbsolutePath());
+                try {
+                    Files.setAttribute(path, "dos:hidden", false, LinkOption.NOFOLLOW_LINKS);
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(Administrador_archivos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                b.renameTo(a);
             } else {
-                JOptionPane.showMessageDialog(null, "error al guardar imagen");
+                JOptionPane.showMessageDialog(null, "Ups, we have some problems with your image, try it again.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "la imagen se debe guardar en formato .bmp");
+            if (archivo.getName().length() > 0) {
+                JOptionPane.showMessageDialog(null, "Please select a file with .bmp extension");
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a file");
+            }
         }
     }//GEN-LAST:event_BtnDecryptImageActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
-        new calculadora().setVisible(true);
+        calculadora a = new calculadora();
+        a.setVisible(true);
+        a.setLocationRelativeTo(null);
+
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
+    private void btnConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfActionPerformed
+        Config_contras b = new Config_contras(0);
+        b.setVisible(true);
+        b.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnConfActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -281,7 +366,9 @@ public class Administrador_archivos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Administrador_archivos().setVisible(true);
+                Administrador_archivos c = new Administrador_archivos();
+                c.setVisible(true);
+                c.setLocationRelativeTo(null);
             }
         });
     }
@@ -289,8 +376,10 @@ public class Administrador_archivos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAbrirArchivo;
     private javax.swing.JButton BtnDecryptImage;
+    private javax.swing.JButton btnConf;
     private javax.swing.JButton btnEncryptImage;
     private javax.swing.JButton jButton1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblimagen;
     // End of variables declaration//GEN-END:variables
 }

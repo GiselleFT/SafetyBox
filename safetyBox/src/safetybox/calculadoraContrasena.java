@@ -8,15 +8,25 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class calculadoraContrasena extends javax.swing.JFrame {
 
     String contrasena = "";
+    int lo_cerraron = 0;
+
+    
 
     public calculadoraContrasena() {
-
         initComponents();
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                JOptionPane.showMessageDialog(null, "Please enter a password");
+            }
+        });
     }
 
     /**
@@ -53,8 +63,8 @@ public class calculadoraContrasena extends javax.swing.JFrame {
         jButtonBorrar = new javax.swing.JButton();
         jButtonIgual = new javax.swing.JButton();
         jButtonMenos1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -280,9 +290,13 @@ public class calculadoraContrasena extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("= - Confirmar");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel3.setText("C - Delete Password");
 
-        jLabel2.setText("C - Borrar contraseña");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel1.setText("= - Confirm");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -332,23 +346,24 @@ public class calculadoraContrasena extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButtonIgual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(37, 37, 37))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(98, 98, 98))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(98, 98, 98))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(118, 118, 118))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
                 .addComponent(displayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -524,10 +539,10 @@ public class calculadoraContrasena extends javax.swing.JFrame {
             System.out.println("SHA-1: " + sha);
             //******************************GUARDAMOS EL SHA******************************
             File file = new File("c.txt");
-                BufferedWriter bw = null;
-                bw = new BufferedWriter(new FileWriter(file));
-                bw.write(sha);
-                bw.close();
+            BufferedWriter bw = null;
+            bw = new BufferedWriter(new FileWriter(file));
+            bw.write(sha);
+            bw.close();
             //***************************************************************
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(calculadoraContrasena.class.getName()).log(Level.SEVERE, null, ex);
@@ -585,7 +600,9 @@ public class calculadoraContrasena extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new calculadoraContrasena().setVisible(true);
+                calculadoraContrasena a = new calculadoraContrasena();
+                a.setVisible(true);
+                a.setLocationRelativeTo(null);
             }
         });
     }
@@ -617,6 +634,6 @@ public class calculadoraContrasena extends javax.swing.JFrame {
     private javax.swing.JButton jButtonResta;
     private javax.swing.JButton jButtonSuma;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
