@@ -29,9 +29,9 @@ public class DES_AES {
     }
 
     public static void Encrypt(InputStream in, OutputStream out) throws IOException {
-        byte[] header = new byte[54];
-        in.read(header);
-        out.write(header, 0, 54);
+//        byte[] header = new byte[54];
+//        in.read(header);
+//        out.write(header, 0, 54);
         CipherOutputStream cos = new CipherOutputStream(out, ecipher);
         byte[] bytes = new byte[64];
         int numBytes;
@@ -46,9 +46,9 @@ public class DES_AES {
     }
 
     public static void Decrypt(InputStream in, OutputStream out) throws IOException {
-        byte[] header = new byte[54];
-        in.read(header);
-        out.write(header, 0, 54);
+//        byte[] header = new byte[54];
+//        in.read(header);
+//        out.write(header, 0, 54);
         CipherOutputStream cos = new CipherOutputStream(out, dcipher);
         byte[] bytes = new byte[64];
         int numBytes;

@@ -166,7 +166,7 @@ public class Administrador_archivos extends javax.swing.JFrame {
             File archivo = seleccionado.getSelectedFile();
             ruta = archivo.getAbsolutePath();
             if (archivo.canRead()) {
-                if (archivo.getName().endsWith("bmp")) {
+                if (archivo.getName()!=null) {
                     bytesImg = AbrirAImagen(archivo);
                     System.out.println(bytesImg);
                     //this.lblimagen.setIcon(new ImageIcon(bytesImg));
@@ -227,7 +227,7 @@ public class Administrador_archivos extends javax.swing.JFrame {
                 FileOutputStream Fout_d = new FileOutputStream(archivo.getParent() + "/gftsal" + archivo.getName());
                 System.out.println(archivo.getParent());
                 DesAesCipher.Decrypt(Fin_d, Fout_d);
-                respuesta = "Your image was deciphered !!";
+                respuesta = "Your file was deciphered !!";
             } else {
                 JOptionPane.showMessageDialog(null, "Please select a file");
             }
@@ -248,7 +248,7 @@ public class Administrador_archivos extends javax.swing.JFrame {
                 FileOutputStream Fout_d = new FileOutputStream(archivo.getParent() + "/gftsal" + archivo.getName());
                 System.out.println(archivo.getParent());
                 DesAesCipher.Encrypt(Fin_d, Fout_d);
-                respuesta = "Your image was ciphered !!";
+                respuesta = "Your file was ciphered !!";
             } else {
                 JOptionPane.showMessageDialog(null, "Please select a file");
             }
@@ -263,7 +263,7 @@ public class Administrador_archivos extends javax.swing.JFrame {
 
     private void btnEncryptImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptImageActionPerformed
         File archivo = new File(ruta);
-        if (archivo.getName().endsWith(".bmp")) {
+        if (archivo.getName()!=null) {
             String respuesta = cifrarImagen(archivo);
             if (respuesta != null) {
                 try {
@@ -283,21 +283,16 @@ public class Administrador_archivos extends javax.swing.JFrame {
                     Logger.getLogger(Administrador_archivos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Ups, we have some problems with your image, try it again.");
+                JOptionPane.showMessageDialog(null, "Ups, we have some problems with your file, try it again.");
             }
         } else {
-            if (archivo.getName().length() > 0) {
-                JOptionPane.showMessageDialog(null, "Please select a file with .bmp extension");
-            } else {
                 JOptionPane.showMessageDialog(null, "Please select a file");
             }
-
-        }
     }//GEN-LAST:event_btnEncryptImageActionPerformed
 
     private void BtnDecryptImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDecryptImageActionPerformed
         File archivo = new File(ruta);
-        if (archivo.getName().endsWith(".bmp")) {
+        if (archivo.getName()!=null) {
             String respuesta = decifrarImagen(archivo);
             if (respuesta != null) {
                 File a = new File(archivo.getAbsolutePath());
@@ -314,15 +309,11 @@ public class Administrador_archivos extends javax.swing.JFrame {
                 }
                 b.renameTo(a);
             } else {
-                JOptionPane.showMessageDialog(null, "Ups, we have some problems with your image, try it again.");
+                JOptionPane.showMessageDialog(null, "Ups, we have some problems with your file, try it again.");
             }
         } else {
-            if (archivo.getName().length() > 0) {
-                JOptionPane.showMessageDialog(null, "Please select a file with .bmp extension");
-            } else {
                 JOptionPane.showMessageDialog(null, "Please select a file");
             }
-        }
     }//GEN-LAST:event_BtnDecryptImageActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
